@@ -9,7 +9,7 @@ image is that the result will be capable of optionally starting a
 [Thermostat](http://icedtea.classpath.org/thermostat/) agent within
 a deployment.
 
-See [Thermostat on OpenShift Usage][https://github.com/jerboaa/thermostat-openshift]
+See [Thermostat on OpenShift Usage](https://github.com/jerboaa/thermostat-openshift)
 for details as to how to use the built image.
 
 ## Usage

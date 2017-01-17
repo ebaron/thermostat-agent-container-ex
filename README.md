@@ -1,4 +1,4 @@
-# Example Wildfly Builder Image for OpenShift
+# Thermostat + Wildfly Builder Image for OpenShift
 
 This repository contains a sample Dockerfile for a builder
 image which can be used as a drop-in replacement of the

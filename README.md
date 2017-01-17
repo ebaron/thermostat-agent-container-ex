@@ -2,7 +2,8 @@
 
 This repository contains a sample Dockerfile for a builder
 image which can be used as a drop-in replacement of the
-[openshift/wildfly-101-centos7](https://github.com/openshift-s2i/s2i-wildfly).
+[openshift/wildfly-101-centos7](https://github.com/openshift-s2i/s2i-wildfly)
+image.
 
 The difference between `openshift/wildfly-101-centos7` and this
 image is that the result will be capable of optionally starting a

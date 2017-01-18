@@ -22,7 +22,7 @@ RHEL machine execute the following:
 
 The resulting image can then be used to build your Wildfly app:
 
-    $ s2i build file://${pwd}/test/wildfly-testapp thermostat/wildfly-101-rhel7 wildfly-testapp
+    $ s2i build file://$(pwd)/test/wildfly-testapp thermostat/wildfly-101-rhel7 wildfly-testapp
 
 Then run the app as usual:
 

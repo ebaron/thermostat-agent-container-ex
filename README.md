@@ -41,24 +41,30 @@ relies on a third image, `rhscl/mongodb-32-rhel7` for example, for its mongodb b
 
 Let's start the mongodb image first:
 
-    $ docker run -p 27017:27017 -d \
+    $ MONGO_CID=$(mktemp -u --suffix=.cid)
+    $ docker run -d \
               -e MONGODB_USER=mongouser \
               -e MONGODB_PASSWORD=mongopassword \
               -e MONGODB_DATABASE=thermostat \
               -e MONGODB_ADMIN_PASSWORD=changeme123 \
+              --cidfile=${MONGO_CID} \
               rhscl/mongodb-32-rhel7
+    $ MONGO_IP=$( docker inspect --format '{{ .NetworkSettings.IPAddress }}' $(cat ${MONGO_CID}) )
 
 Now start the Thermostat Storage Endpoint:
 
+    $ TH_STORAGE_CID=$(mktemp -u --suffix=.cid)
     $ docker run -p 8081:8080 -d \
-              -e MONGO_URL=mongodb://127.0.0.1:27017 \
+              -e MONGO_URL=mongodb://${MONGO_IP}:27017 \
               -e MONGO_USERNAME=mongouser \
               -e MONGO_PASSWORD=mongopassword \
               -e THERMOSTAT_AGENT_USERNAMES="agent1" \
               -e THERMOSTAT_AGENT_PASSWORDS="a_secrit1" \
               -e THERMOSTAT_CLIENT_USERNAMES="client1" \
               -e THERMOSTAT_CLIENT_PASSWORDS="c_secrit1" \
+              --cidfile=${TH_STORAGE_CID} \
               rhscl/thermostat-16-storage-rhel7
+    $ TH_STORAGE_IP=$( docker inspect --format '{{ .NetworkSettings.IPAddress }}' $(cat ${TH_STORAGE_CID}) )
 
 ### Start the Application with the Thermostat Agent
 
@@ -68,7 +74,7 @@ as follows:
     $ docker run -p 8080:8080 -p 12000:12000 \
        -e THERMOSTAT_AGENT_USERNAME=agent1 \
        -e THERMOSTAT_AGENT_PASSWORD=a_secrit1 \
-       -e THERMOSTAT_DB_URL=http://127.0.0.1:8081/thermostat/storage \
+       -e THERMOSTAT_DB_URL=http://${TH_STORAGE_IP}:8080/thermostat/storage \
        -d wildfly-testapp
 
 ## Disabling the Thermostat Agent

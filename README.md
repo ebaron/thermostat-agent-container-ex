@@ -15,10 +15,9 @@ for more details as to how to use the built image.
 
 ## Usage
 
-In order to build the Wildfly Builder image on a properly subscribed
-RHEL machine execute the following:
+In order to build the Wildfly Builder image execute the following:
 
-    $ docker build -f Dockerfile.rhel7 -t thermostat/wildfly-101-rhel7 .
+    $ docker build -f Dockerfile -t thermostat/wildfly-101-rhel7 .
 
 The resulting image can then be used to build your Wildfly app:
 
